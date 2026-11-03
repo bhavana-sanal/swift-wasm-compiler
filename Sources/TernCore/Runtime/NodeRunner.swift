@@ -30,8 +30,8 @@ public enum NodeRunner {
         // fill a pipe buffer and deadlock against `waitUntilExit`.
         let stdoutURL = directory.appendingPathComponent("stdout")
         let stderrURL = directory.appendingPathComponent("stderr")
-        fileManager.createFile(atPath: stdoutURL.path, contents: nil)
-        fileManager.createFile(atPath: stderrURL.path, contents: nil)
+        try Data().write(to: stdoutURL)
+        try Data().write(to: stderrURL)
         let stdout = try FileHandle(forWritingTo: stdoutURL)
         let stderr = try FileHandle(forWritingTo: stderrURL)
 
