@@ -1,0 +1,33 @@
+// Finds the starting value below 100000 with the longest Collatz chain.
+// Chains climb far above their starting value, so they are computed in i64.
+
+fn chain_length(start: i64) -> i32 {
+    var n = start;
+    var steps = 0;
+    while n != 1 {
+        n = if n % 2 == 0 { n / 2 } else { 3 * n + 1 };
+        steps += 1;
+    }
+    steps
+}
+
+export fn main() {
+    print_str("chain_length(27) = ");
+    print_i32(chain_length(27));
+    print_str("\n");
+
+    var best = 1;
+    var best_steps = 0;
+    for start in 1..100000 {
+        let steps = chain_length(start as i64);
+        if steps > best_steps {
+            best = start;
+            best_steps = steps;
+        }
+    }
+    print_str("longest chain below 100000 starts at ");
+    print_i32(best);
+    print_str(" (");
+    print_i32(best_steps);
+    print_str(" steps)\n");
+}

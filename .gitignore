@@ -1,0 +1,11 @@
+.build/
+.swiftpm/
+Package.resolved
+*.xcodeproj
+xcuserdata/
+DerivedData/
+.DS_Store
+
+# Compiler output
+*.wasm
+*.wat

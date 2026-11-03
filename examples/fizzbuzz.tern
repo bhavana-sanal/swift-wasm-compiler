@@ -1,0 +1,22 @@
+// FizzBuzz from 1 to 100.
+
+fn label(n: i32) -> str {
+    if n % 15 == 0 {
+        "FizzBuzz"
+    } else if n % 3 == 0 {
+        "Fizz"
+    } else {
+        "Buzz"
+    }
+}
+
+export fn main() {
+    for i in 1..101 {
+        if i % 3 == 0 || i % 5 == 0 {
+            print_str(label(i));
+        } else {
+            print_i32(i);
+        }
+        print_str("\n");
+    }
+}

@@ -1,0 +1,24 @@
+// Sieve of Eratosthenes: prints the primes below 100 and counts those below 10000.
+
+export fn main() {
+    var composite = [false; 10000];
+    var count = 0;
+    for i in 2..10000 {
+        if composite[i] {
+            continue;
+        }
+        count += 1;
+        if i < 100 {
+            if i > 2 { print_str(" "); }
+            print_i32(i);
+        }
+        var multiple = i * i;
+        while multiple < 10000 {
+            composite[multiple] = true;
+            multiple += i;
+        }
+    }
+    print_str("\nprimes below 10000: ");
+    print_i32(count);
+    print_str("\n");
+}

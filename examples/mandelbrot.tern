@@ -1,0 +1,32 @@
+// ASCII rendering of the Mandelbrot set.
+
+fn escape_time(cr: f64, ci: f64, limit: i32) -> i32 {
+    var zr = 0.0;
+    var zi = 0.0;
+    var i = 0;
+    while i < limit && zr * zr + zi * zi <= 4.0 {
+        let next = zr * zr - zi * zi + cr;
+        zi = 2.0 * zr * zi + ci;
+        zr = next;
+        i += 1;
+    }
+    i
+}
+
+export fn main() {
+    // Brighter characters for points that take longer to escape; '@' never escapes.
+    let shades = [" ", ".", ":", "-", "=", "+", "*", "#", "%", "@"];
+    let width = 72;
+    let height = 28;
+    let limit = 200;
+    for row in 0..height {
+        let ci = (row as f64) / (height as f64) * 2.4 - 1.2;
+        for col in 0..width {
+            let cr = (col as f64) / (width as f64) * 3.5 - 2.5;
+            let n = escape_time(cr, ci, limit);
+            let shade = if n == limit { 9 } else if n > 9 { 8 } else { n - 1 };
+            print_str(shades[shade]);
+        }
+        print_str("\n");
+    }
+}

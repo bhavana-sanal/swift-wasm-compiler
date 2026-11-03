@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  macos:
+    name: macOS
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      # Node.js runs the compiled modules in the end-to-end tests.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Toolchain versions
+        run: swift --version && node --version
+
+      - name: Build (release, warnings as errors)
+        run: swift build -c release -Xswiftc -warnings-as-errors
+
+      - name: Test
+        run: swift test
+
+  linux:
+    name: Linux
+    runs-on: ubuntu-latest
+    container: swift:6.2
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Toolchain versions
+        run: swift --version && node --version
+
+      - name: Build (release, warnings as errors)
+        run: swift build -c release -Xswiftc -warnings-as-errors
+
+      - name: Test
+        run: swift test
